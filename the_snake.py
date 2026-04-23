@@ -70,7 +70,7 @@ class Apple(GameObject):
     
     self.radomize_position():
     
-    def randomize_position
+    def randomize_position(self)
 
 
 
