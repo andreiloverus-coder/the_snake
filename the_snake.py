@@ -66,7 +66,12 @@ class Apple(GameObject):
     появляется в случайном месте поля.
     """
     apple_color = (255,0,0)
-    super().__init__(position=None)
+    super().__init__(position=None, body_color=apple_color)
+    
+    self.radomize_position():
+    
+    def randomize_position
+
 
 
 def main():
