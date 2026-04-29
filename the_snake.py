@@ -95,6 +95,53 @@ class Apple(GameObject):
 
         pygame.draw.rect(surface, self.body_color, rect)
 
+
+
+class Snake (GameObject):
+    """Дочерний класс, описывающий змейку."""
+
+    def __init__(self, body_color=SNAKE_COLOR):
+        """Конструктор дочернего класса, создающий змейку."""
+        super().__init__(body_color)
+        self.reset()
+        self.last = None
+
+    def update_direction(self):
+        """Метод, обновляющий направления движения змейки."""
+        if self.next_direction:
+            self.direction = self.next_direction
+            self.next_direction = None
+
+    def get_head_position(self):
+        """Метод, возвращающий позицию головы змейки."""
+        return self.positions[0]
+
+    def move(self):
+        """Метод, обновляющий позицию змейки."""
+        head_x, head_y = self.get_head_position()
+        self.positions.insert(0, ((head_x + self.direction[0]
+                                   * GRID_SIZE) % SCREEN_WIDTH,
+                                  (head_y + self.direction[1]
+                                   * GRID_SIZE) % SCREEN_HEIGHT))
+        if len(self.positions) > self.length:
+            self.last = self.positions.pop()
+        else:
+            self.last = None
+
+    def draw(self):
+        """Метод для отрисовки змейки."""
+        self.paint_cell(self.get_head_position())
+        if self.last:
+            self.paint_cell(self.last, BOARD_BACKGROUND_COLOR)
+
+    def reset(self):
+        """Метод для сброса змейки при возобновлении игры."""
+        self.length = 1
+        self.positions = [self.position]
+        self.direction = choice([RIGHT, LEFT, UP, DOWN])
+        self.next_direction = None
+        self.last = None
+
 def main():
     # Инициализация PyGame:
     pygame.init()
