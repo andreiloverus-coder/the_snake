@@ -1,6 +1,6 @@
-from random import choice, randint
-import pygame
 import sys
+import pygame
+from random import choice, randint
 
 # Константы для размеров поля и сетки
 SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
@@ -32,9 +32,7 @@ clock = pygame.time.Clock()
 
 
 class GameObject:
-    """Базовый класс, от которого наследуются все игровые объекты.
-    Содержит общие атрибуты: позиция и цвет.
-    """
+    """Базовый класс, от которого наследуются все игровые объекты. Содержит общие атрибуты: позиция и цвет."""
 
     def __init__(self, position=None, body_color=None):
         """Конструктор базового игрового объекта.
@@ -60,9 +58,7 @@ class GameObject:
 
 
 class Apple(GameObject):
-    """Класс, описывающий яблоко. Наследуется от GameObject.
-    Появляется в случайном месте игрового поля.
-    """
+    """Класс, описывающий яблоко. Наследуется от GameObject. Появляется в случайном месте игрового поля."""
 
     def __init__(self):
         """Инициализирует яблоко с красным цветом и случайной позицией."""
@@ -93,8 +89,7 @@ class Apple(GameObject):
 
 
 class Snake(GameObject):
-    """Дочерний класс, описывающий змейку.
-    """
+    """Дочерний класс, описывающий змейку."""
 
     def __init__(self, body_color=SNAKE_COLOR):
         """Конструктор, создающий змейку.
@@ -205,65 +200,3 @@ def main():
             # Убедимся, что яблоко не появляется на змейке
             while apple.position in snake.positions:
                 apple.randomize_position()
-
-        # Проверка столкновения с собой
-        if snake.get_head_position() in snake.positions[1:]:
-            snake.reset()
-            apple.randomize_position()
-
-        # Отрисовка объектов
-        apple.draw(screen)
-        snake.draw(screen)
-
-        pygame.display.update()
-
-
-if __name__ == '__main__':
-    main()
-
-
-
-# Метод draw класса Apple
-# def draw(self):
-#     rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
-#     pygame.draw.rect(screen, self.body_color, rect)
-#     pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
-
-# # Метод draw класса Snake
-# def draw(self):
-#     for position in self.positions[:-1]:
-#         rect = (pygame.Rect(position, (GRID_SIZE, GRID_SIZE)))
-#         pygame.draw.rect(screen, self.body_color, rect)
-#         pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
-
-#     # Отрисовка головы змейки
-#     head_rect = pygame.Rect(self.positions[0], (GRID_SIZE, GRID_SIZE))
-#     pygame.draw.rect(screen, self.body_color, head_rect)
-#     pygame.draw.rect(screen, BORDER_COLOR, head_rect, 1)
-
-#     # Затирание последнего сегмента
-#     if self.last:
-#         last_rect = pygame.Rect(self.last, (GRID_SIZE, GRID_SIZE))
-#         pygame.draw.rect(screen, BOARD_BACKGROUND_COLOR, last_rect)
-
-# Функция обработки действий пользователя
-# def handle_keys(game_object):
-#     for event in pygame.event.get():
-#         if event.type == pygame.QUIT:
-#             pygame.quit()
-#             raise SystemExit
-#         elif event.type == pygame.KEYDOWN:
-#             if event.key == pygame.K_UP and game_object.direction != DOWN:
-#                 game_object.next_direction = UP
-#             elif event.key == pygame.K_DOWN and game_object.direction != UP:
-#                 game_object.next_direction = DOWN
-#             elif event.key == pygame.K_LEFT and game_object.direction != RIGHT:
-#                 game_object.next_direction = LEFT
-#             elif event.key == pygame.K_RIGHT and game_object.direction != LEFT:
-#                 game_object.next_direction = RIGHT
-
-# Метод обновления направления после нажатия на кнопку
-# def update_direction(self):
-#     if self.next_direction:
-#         self.direction = self.next_direction
-#         self.next_direction = None
