@@ -160,17 +160,38 @@ def handle_keys(game_object):
                 game_object.next_direction = RIGHT
             elif event.key == pygame.K_ESCAPE:
                 sys.exit()
+
+
 def main():
-    # Инициализация PyGame:
+    """Функция, описывающая основной игровой цикл."""
     pygame.init()
-    # Тут нужно создать экземпляры классов.
-    ...
 
-    # while True:
-    #     clock.tick(SPEED)
+    snake = Snake()
+    screen.fill(BOARD_BACKGROUND_COLOR)
+    apple = Apple(snake)
+    apple.draw()
 
-        # Тут опишите основную логику игры.
-        # ...
+    while True:
+        clock.tick(SPEED)
+
+        if snake.get_head_position() == apple.position:
+            snake.length += 1
+            apple.randomize_position(snake)
+            apple.draw()
+
+        if (snake.get_head_position() in snake.positions[1:]
+                or snake.get_head_position() == snake.last):
+            screen.fill(BOARD_BACKGROUND_COLOR)
+            snake.reset()
+            apple.draw()
+
+        snake.move()
+        snake.draw()
+        handle_keys(snake)
+        snake.update_direction()
+
+        pygame.display.update()
+
 
 
 if __name__ == '__main__':
